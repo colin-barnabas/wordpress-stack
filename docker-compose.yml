@@ -1,0 +1,28 @@
+version: "3"
+services:
+  wordpress:
+    build:
+      context: ./
+      dockerfile: Dockerfile.wordpress
+    image: colinbarnabas/wordpress
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+      - nginx
+
+  mysql:
+    build:
+      context: ./
+      dockerfile: Dockerfile.mysql
+    image: colinbarnabas/mysql
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile.nginx
+    image: colinbarnabas/nginx
+
+volumes:
+  wp-db:
+  wp-content:
