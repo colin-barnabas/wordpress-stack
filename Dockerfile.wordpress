@@ -3,5 +3,6 @@ RUN wget https://wordpress.org/latest.tar.gz
 
 FROM ubuntu:xenial
 COPY --from=0 /latest.tar.gz /tmp/
-RUN tar -xvzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html
+RUN mkdir -p /var/www/html && tar -xvzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html
+RUN apt-get -qq update && apt-get -qy install apache2 php libapache2-mod-php php-mcrypt php-mysql
 CMD ["apachectl", "-D", "FOREGROUND"]
