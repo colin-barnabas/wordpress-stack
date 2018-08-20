@@ -2,10 +2,10 @@ version: "3"
 services:
   wordpress:
     build:
-      context: ./
+      context: ./wordpress/
       dockerfile: Dockerfile.wordpress
     image: colinbarnabas/wordpress
-    env_file: .env_wordpress
+    env_file: ./wordpress/.env_wordpress
     ports:
       - "80:80"
     depends_on:
@@ -14,14 +14,14 @@ services:
 
   mysql:
     build:
-      context: ./
+      context: ./mysql/
       dockerfile: Dockerfile.mysql
     image: colinbarnabas/mysql
-    env_file: .env_mysql
+    env_file: ./mysql/.env_mysql
 
   nginx:
     build:
-      context: ./
+      context: ./nginx/
       dockerfile: Dockerfile.nginx
     image: colinbarnabas/nginx
 
