@@ -1,0 +1,8 @@
+FROM ubuntu:xenial
+
+RUN set -ex apt-get -q update \
+        && apt-get -qqy install mysql-server
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["mysqld"]
+
