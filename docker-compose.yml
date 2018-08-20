@@ -5,6 +5,7 @@ services:
       context: ./
       dockerfile: Dockerfile.wordpress
     image: colinbarnabas/wordpress
+    env_file: .env_wordpress
     ports:
       - "80:80"
     depends_on:
@@ -16,6 +17,7 @@ services:
       context: ./
       dockerfile: Dockerfile.mysql
     image: colinbarnabas/mysql
+    env_file: .env_mysql
 
   nginx:
     build:
