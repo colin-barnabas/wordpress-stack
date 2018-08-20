@@ -1,12 +1,13 @@
 FROM ubuntu:xenial
 RUN set -ex \
         && apt-get -q update \
-        && apt-get -qy install apache2 php libapache2-mod-php php-mysql wget \
+        && apt-get -qy install -y --no-install-recommends apache2 php libapache2-mod-php php-mysql wget \
         && wget https://wordpress.org/latest.tar.gz -O /tmp/latest.tar.gz \
         && DIR="/var/www/html/" \
         && rm -rf $DIR/*  \
         && tar -xvzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html \
         && apt-get purge -y --auto-remove wget \
+        && rm -rf /var/lib/apt/lists/* \
         && ln -sf /proc/self/fd/1 /var/log/apache2/access.log \
         && ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
