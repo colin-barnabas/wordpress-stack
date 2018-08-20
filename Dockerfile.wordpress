@@ -1,8 +1,16 @@
-FROM alpine:latest
-RUN wget https://wordpress.org/latest.tar.gz
-
 FROM ubuntu:xenial
-COPY --from=0 /latest.tar.gz /tmp/
-RUN mkdir -p /var/www/html && tar -xvzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html
-RUN apt-get -qq update && apt-get -qy install apache2 php libapache2-mod-php php-mcrypt php-mysql
-CMD ["apachectl", "-D", "FOREGROUND"]
+RUN set -ex \
+        && apt-get -q update \
+        && apt-get -qy install apache2 php libapache2-mod-php php-mysql wget \
+        && wget https://wordpress.org/latest.tar.gz -O /tmp/latest.tar.gz \
+        && DIR="/var/www/html/" \
+        && rm -rf $DIR/*  \
+        && tar -xvzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html \
+        && apt-get purge -y --auto-remove wget \
+        && ln -sf /proc/self/fd/1 /var/log/apache2/access.log \
+        && ln -sf /proc/self/fd/1 /var/log/apache2/error.log
+
+COPY httpd-foreground /usr/local/bin
+
+EXPOSE 80
+CMD ["httpd-foreground"]
