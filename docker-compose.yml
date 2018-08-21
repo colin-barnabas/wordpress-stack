@@ -5,19 +5,24 @@ services:
       context: ./wordpress/
       dockerfile: Dockerfile.wordpress
     image: colinbarnabas/wordpress
-    env_file: ./wordpress/.env_wordpress
+    volumes:
+      - wp-content:/var/www/html/wp-content/
+    env_file: ./wordpress/env_wordpress
     ports:
       - "80:80"
     depends_on:
-      - mysql
+      - mariadb
       - nginx
 
-  mysql:
+  mariadb:
     build:
-      context: ./mysql/
-      dockerfile: Dockerfile.mysql
-    image: colinbarnabas/mysql
-    env_file: ./mysql/.env_mysql
+      context: ./mariadb/
+      dockerfile: Dockerfile.mariadb
+    image: colinbarnabas/mariadb
+    volumes: 
+      - wp-db:/var/lib/mysql/
+
+    env_file: ./mariadb/env_mariadb
 
   nginx:
     build:
