@@ -25,6 +25,7 @@ if [ "$1" = 'mysqld' ]; then
          CREATE USER IF NOT EXISTS "\"${MYSQL_USER}\""@"\"%\"";
          SET PASSWORD FOR "\"${MYSQL_USER}\""@"\"%\"" = PASSWORD("\"${MYSQL_PASSWORD}\"");
          GRANT ALL ON "${MYSQL_DATABASE}".* TO "\"${MYSQL_USER}\""@"\"%\"";
+         DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
          FLUSH PRIVILEGES;
          SHOW DATABASES;"
 
