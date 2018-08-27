@@ -8,33 +8,44 @@ services:
     volumes:
       - wp-content:/var/www/html/wp-content/
     env_file: ./wordpress/env_wordpress
+    networks:
+      - local
     ports:
       - "80:80"
     depends_on:
       - mysql
-    links:
-      - mysql:mysql
-
+    restart: always
 
   mysql:
     build:
       context: ./mysql/
       dockerfile: Dockerfile.mysql
     image: colinbarnabas/mysql
+    expose: 
+      - "3306"
+    networks:
+      local:
+        aliases:
+          - db
     volumes: 
       - wp-db:/var/lib/mysql/
       - ./mysql-logs:/var/log/mysql/
 
     env_file: ./mysql/env_mysql
+    restart: always
 
   nginx:
     build:
       context: ./nginx/
       dockerfile: Dockerfile.nginx
     image: colinbarnabas/nginx
-    links:
-      - wordpress:wordpress
+    networks:
+      - local 
+    #restart: always
 
 volumes:
   wp-db:
   wp-content:
+
+networks:
+  local:
