@@ -34,15 +34,6 @@ services:
     env_file: ./mysql/env_mysql
     restart: always
 
-  nginx:
-    build:
-      context: ./nginx/
-      dockerfile: Dockerfile.nginx
-    image: colinbarnabas/nginx
-    networks:
-      - local 
-    #restart: always
-
 volumes:
   wp-db:
   wp-content:
