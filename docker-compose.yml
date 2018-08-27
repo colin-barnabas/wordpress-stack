@@ -11,18 +11,18 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - mariadb
+      - mysql
       - nginx
 
-  mariadb:
+  mysql:
     build:
-      context: ./mariadb/
-      dockerfile: Dockerfile.mariadb
-    image: colinbarnabas/mariadb
+      context: ./mysql/
+      dockerfile: Dockerfile.mysql
+    image: colinbarnabas/mysql
     volumes: 
       - wp-db:/var/lib/mysql/
 
-    env_file: ./mariadb/env_mariadb
+    env_file: ./mysql/env_mysql
 
   nginx:
     build:

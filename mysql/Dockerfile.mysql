@@ -1,0 +1,17 @@
+FROM ubuntu:xenial
+RUN set -ex \
+        && export DEBIAN_FRONTEND=noninteractive \
+        && groupadd -r mysql \
+        && useradd -r -g mysql mysql \
+        && apt-get -q update \
+        && apt-get -yq --no-install-recommends install mysql-server \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /var/lib/mysql \
+        && mkdir /var/run/mysqld/ \
+        && chown -R mysql:mysql /var/run/mysqld/
+
+COPY docker-entrypoint.sh /
+COPY init.sql /
+EXPOSE 3306
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["mysqld"]
