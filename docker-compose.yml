@@ -12,7 +12,9 @@ services:
       - "80:80"
     depends_on:
       - mysql
-      - nginx
+    links:
+      - mysql:mysql
+
 
   mysql:
     build:
@@ -21,6 +23,7 @@ services:
     image: colinbarnabas/mysql
     volumes: 
       - wp-db:/var/lib/mysql/
+      - ./mysql-logs:/var/log/mysql/
 
     env_file: ./mysql/env_mysql
 
@@ -29,6 +32,8 @@ services:
       context: ./nginx/
       dockerfile: Dockerfile.nginx
     image: colinbarnabas/nginx
+    links:
+      - wordpress:wordpress
 
 volumes:
   wp-db:

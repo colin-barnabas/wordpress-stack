@@ -10,7 +10,7 @@ RUN set -ex \
         && mkdir /var/run/mysqld/ \
         && chown -R mysql:mysql /var/run/mysqld/ \
         && ln -sf /proc/self/fd/1 /var/log/mysql/error.log \
-        && chown mysql:mysql /var/log/mysql/error.log
+        && chown -R mysql:mysql /var/log/mysql/
 
 
 COPY docker-entrypoint.sh /
