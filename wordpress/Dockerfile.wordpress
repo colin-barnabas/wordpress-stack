@@ -12,6 +12,7 @@ RUN set -ex \
         && ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
 COPY httpd-foreground /usr/local/bin
+COPY wp-config.php /var/www/html/
 
 EXPOSE 80
 CMD ["httpd-foreground"]
