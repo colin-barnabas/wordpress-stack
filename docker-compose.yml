@@ -9,9 +9,12 @@ services:
       - wp-content:/var/www/html/wp-content/
     env_file: ./wordpress/env_wordpress
     networks:
-      - local
-    ports:
-      - "80:80"
+      local:
+        aliases:
+          - wp
+      
+    expose:
+      - "80"
     depends_on:
       - mysql
     restart: always
@@ -39,6 +42,9 @@ services:
       context: ./nginx/
       dockerfile: Dockerfile.nginx
     image: colinbarnabas/nginx
+    ports:
+      - "80:80"
+      - "443:443"
     networks:
       - local 
     #restart: always
