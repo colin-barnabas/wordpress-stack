@@ -47,7 +47,7 @@ services:
       - "443:443"
     networks:
       - local 
-    #restart: always
+    restart: always
 
 volumes:
   wp-db:
