@@ -11,8 +11,6 @@ if [ "$1" = 'mysqld' ]; then
         "$@" --initialize-insecure
     fi
 
-    chown -R mysql:mysql /var/log/mysql/
-    chmod -R 777 /var/log/mysql/
     sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
     "$@" --socket="${SOCKET}" &
     pid="$!"
