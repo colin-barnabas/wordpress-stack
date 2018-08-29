@@ -29,6 +29,7 @@ services:
           - db
     volumes: 
       - wp-db:/var/lib/mysql/
+      - ./mysql-logs:/var/log/mysql/
 
     env_file: ./mysql/env_mysql
     restart: always
